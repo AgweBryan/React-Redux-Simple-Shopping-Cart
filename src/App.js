@@ -26,8 +26,7 @@ const App = () => {
     if (firstRender) {
       firstRender = false;
       return;
-    }
-    if (cart.changed) {
+    } else {
       dispatch(sendCartData(cart));
     }
   }, [cart, dispatch]);

@@ -5,9 +5,11 @@ import { notificationActions } from "../slices/notificationSlice";
 
 export const fetchCartData = () => {
   return async (dispatch) => {
-    const fetchData = () => {
-      const data = JSON.parse(localStorage.getItem("cart"));
-
+    const fetchData = async () => {
+      const res = await fetch(
+        "https://redux-8975f-default-rtdb.firebaseio.com/cart.json"
+      );
+      const data = await res.json();
       return data;
     };
 
@@ -19,10 +21,9 @@ export const fetchCartData = () => {
         showCart: false,
         changed: false,
       };
-      const data = fetchData() === null ? resetCart : fetchData();
+      const data = (await fetchData()) ?? resetCart;
       dispatch(cartActions.replaceCartData(data));
     } catch (error) {
-      console.log(error);
       dispatch(
         notificationActions.showNotification({
           open: true,
@@ -44,20 +45,22 @@ export const sendCartData = (cart) => {
       })
     );
 
-    const sendRequest = () => {
-      localStorage.setItem("cart", JSON.stringify(cart));
+    const sendRequest = async () => {
+      const res = await fetch(
+        "https://redux-8975f-default-rtdb.firebaseio.com/cart.json",
+        { method: "PUT", body: JSON.stringify(cart) }
+      );
 
       dispatch(
         notificationActions.showNotification({
-          open: false,
+          open: true,
           message: "Sent request to database successfully",
           type: "success",
         })
       );
     };
     try {
-      // await sendRequest()
-      sendRequest();
+      await sendRequest();
     } catch (error) {
       dispatch(
         notificationActions.showNotification({
