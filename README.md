@@ -1,3 +1,9 @@
+# React-Redux Simple Shopping Cart
+A simple shopping cart application built with react, redux and tailwind css
+
+![Screenshot (270)](https://user-images.githubusercontent.com/73445540/215630124-0c7bd061-6cae-45b1-b9f7-e5c3af911ea5.png)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
